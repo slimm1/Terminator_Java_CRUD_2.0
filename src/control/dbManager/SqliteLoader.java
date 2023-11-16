@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dbManager;
+package control.dbManager;
 
+import control.FileManager;
+import control.constants.Constants;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,9 +20,16 @@ import model.User;
  */
 public class SqliteLoader {
     
-    private String connectPath = "jdbc:sqlite:H:\\DAM2023\\ACCESODATOS\\SQLITE\\default.db";
+    private String connectPath;
+    
+    private FileManager fileManager;
     
     private Connection c;
+    
+    public SqliteLoader(){
+        fileManager = new FileManager();
+        connectPath = Constants.jdbc+fileManager.readPath();
+    }
     
     public void setPath(String path){
         this.connectPath=path;
@@ -28,6 +37,9 @@ public class SqliteLoader {
     
     public boolean bdConnect(){
         try{
+            if(fileManager.readPath()==null){
+                throw new SQLException();
+            }
             c = DriverManager.getConnection(connectPath);
             JOptionPane.showMessageDialog(null, "BD CONECTADA", "OK", JOptionPane.INFORMATION_MESSAGE);
             return true;
@@ -41,6 +53,7 @@ public class SqliteLoader {
         try{
             this.setPath("jdbc:sqlite:"+path);
             c = DriverManager.getConnection(connectPath);
+            fileManager.writeDefaultPath(path);
             createTableStatement(c);
             JOptionPane.showMessageDialog(null, "BD CONECTADA", "OK", JOptionPane.INFORMATION_MESSAGE);
             return true;

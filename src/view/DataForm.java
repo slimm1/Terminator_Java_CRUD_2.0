@@ -7,8 +7,8 @@ package view;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import listeners.ClosedWindowListener;
-import listeners.SubmitListener;
+import control.listeners.ClosedWindowListener;
+import control.listeners.SubmitListener;
 
 /**
  *

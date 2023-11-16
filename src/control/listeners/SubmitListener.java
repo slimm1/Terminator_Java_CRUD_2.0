@@ -1,8 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package listeners;
+package control.listeners;
 
 import control.DataController;
 import control.MainController;
@@ -22,6 +18,7 @@ import view.DataForm;
  * @author Martin Ramonda
  */
 public class SubmitListener implements ActionListener{
+    
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
     Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 

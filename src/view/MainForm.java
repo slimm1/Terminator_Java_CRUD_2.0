@@ -4,7 +4,7 @@
  */
 package view;
 
-import dbManager.SqliteLoader;
+import control.constants.Constants;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,9 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import listeners.AddEditListener;
-import listeners.CreateDatabaseListener;
-import listeners.DeleteListener;
+import control.listeners.AddEditListener;
+import control.listeners.CreateDatabaseListener;
+import control.listeners.DeleteListener;
 
 /**
  *
@@ -39,7 +39,7 @@ public class MainForm extends javax.swing.JFrame {
     private void scaleImage(){
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("./src/view/image/logo.png"));
+            img = ImageIO.read(new File(Constants.imgPath));
         } catch (IOException e) {
             e.printStackTrace();
         }
