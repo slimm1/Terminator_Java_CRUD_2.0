@@ -33,25 +33,32 @@ public class MainController {
         return listManager;
     }
     
-    public void loadView(){
-        m = new MainForm();
-        listManager = new UserList(loader.loadListFromDataBase());
-        buttonLogic(loader.bdConnect());
+    public void setListManager(UserList u){
+        this.listManager = u;
     }
     
-    public void buttonLogic(boolean loaded){
+    public void loadView(){
+        m = new MainForm();
+        if(buttonLogic(loader.bdConnect())){
+            listManager = new UserList(loader.loadListFromDataBase());
+            loadTable();
+        }
+    }
+    
+    public boolean buttonLogic(boolean loaded){
         if(loaded){
             m.getCreateButton().setEnabled(false);
             m.getAddButton().setEnabled(true);
             m.getDeleteButton().setEnabled(true);
             m.getEditButton().setEnabled(true);
-            loadTable();
+            return true;
         }
         else{
             m.getCreateButton().setEnabled(true);
             m.getAddButton().setEnabled(false);
             m.getDeleteButton().setEnabled(false);
             m.getEditButton().setEnabled(false);
+            return false;
         }
     }
     

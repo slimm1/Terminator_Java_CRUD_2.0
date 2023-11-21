@@ -34,7 +34,7 @@ public class FileManager {
         }
     }
     
-    public String readPath(){
+    public String readConfigPath(){
         Scanner in=null;
         if(configFile.length()==0){return null;}
         else{

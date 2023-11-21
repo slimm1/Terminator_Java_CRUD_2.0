@@ -18,6 +18,7 @@ import javax.swing.JTable;
 import control.listeners.AddEditListener;
 import control.listeners.CreateDatabaseListener;
 import control.listeners.DeleteListener;
+import java.time.Duration;
 
 /**
  *
@@ -29,11 +30,12 @@ public class MainForm extends javax.swing.JFrame {
      * Creates new form MainForm
      */
     public MainForm() {
-        setVisible(true);
-        setResizable(false);
         initComponents();
         scaleImage();
-        setListeners();
+        this.setVisible(true);
+        this.setResizable(false);
+        this.setListeners();
+        this.setLocationRelativeTo(null); 
     }
     //carga logo a través de un bufferImage
     private void scaleImage(){

@@ -20,11 +20,12 @@ public class DataForm extends javax.swing.JFrame {
      * Creates new form DataForm
      */
     public DataForm() {
-        setVisible(true);
-        setResizable(false);
+        this.setVisible(true);
+        this.setResizable(false);
         initComponents();
         this.submitButton.addActionListener(new SubmitListener());
         this.addWindowListener(new ClosedWindowListener());
+        this.setLocationRelativeTo(null); 
     }
 
     /**

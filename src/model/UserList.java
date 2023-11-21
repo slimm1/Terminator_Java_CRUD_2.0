@@ -12,7 +12,7 @@ public class UserList {
     
     public UserList(ArrayList<User> userList){
         this.userList=userList;
-        if(userList==null){
+        if(userList==null || userList.size()==0){
             this.userList = new ArrayList<>();
         }
     }

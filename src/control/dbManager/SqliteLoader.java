@@ -5,7 +5,9 @@
 package control.dbManager;
 
 import control.FileManager;
+import control.MainController;
 import control.constants.Constants;
+import java.io.File;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.User;
+import model.UserList;
 
 /**
  * @author Martin Ramonda
@@ -28,7 +31,7 @@ public class SqliteLoader {
     
     public SqliteLoader(){
         fileManager = new FileManager();
-        connectPath = Constants.jdbc+fileManager.readPath();
+        connectPath = Constants.jdbc+fileManager.readConfigPath();
     }
     
     public void setPath(String path){
@@ -37,9 +40,10 @@ public class SqliteLoader {
     
     public boolean bdConnect(){
         try{
-            if(fileManager.readPath()==null){
+            if(fileManager.readConfigPath()==null || !new File(fileManager.readConfigPath()).exists()){
                 throw new SQLException();
             }
+            System.out.println(new File(fileManager.readConfigPath()).exists());
             c = DriverManager.getConnection(connectPath);
             JOptionPane.showMessageDialog(null, "BD CONECTADA", "OK", JOptionPane.INFORMATION_MESSAGE);
             return true;
@@ -54,6 +58,7 @@ public class SqliteLoader {
             this.setPath("jdbc:sqlite:"+path);
             c = DriverManager.getConnection(connectPath);
             fileManager.writeDefaultPath(path);
+            MainController._instance.setListManager(new UserList(loadListFromDataBase()));
             createTableStatement(c);
             JOptionPane.showMessageDialog(null, "BD CONECTADA", "OK", JOptionPane.INFORMATION_MESSAGE);
             return true;
