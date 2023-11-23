@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import control.constants.Constants;
@@ -18,7 +14,6 @@ import javax.swing.JTable;
 import control.listeners.AddEditListener;
 import control.listeners.CreateDatabaseListener;
 import control.listeners.DeleteListener;
-import java.time.Duration;
 
 /**
  *
@@ -37,6 +32,7 @@ public class MainForm extends javax.swing.JFrame {
         this.setListeners();
         this.setLocationRelativeTo(null); 
     }
+    
     //carga logo a través de un bufferImage
     private void scaleImage(){
         BufferedImage img = null;

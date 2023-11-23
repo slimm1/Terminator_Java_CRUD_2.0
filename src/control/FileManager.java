@@ -11,13 +11,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Martin Ramonda
+ * Clase con útiles para manejo de ficheros en esta app. 
+ * Para este programa, esta clase se encarga de comprobar el correcto funcionamiento 
+ * de los métodos de lectura y escritura desde y hacia un fichero de configuración muy sencillo.
  */
 public class FileManager {
     
     private File configFile;
     
+    // Constructor, inicia la variable configFile y crea el directorio si no existe
     public FileManager(){
         configFile = new File(Constants.configFilePath);
         createDir();
@@ -34,6 +37,7 @@ public class FileManager {
         }
     }
     
+    // Lee el fichero de configuración y devuelve su contenido como String.
     public String readConfigPath(){
         Scanner in=null;
         if(configFile.length()==0){return null;}
@@ -52,6 +56,7 @@ public class FileManager {
         }
     }
     
+    //Escribe en el fichero de configuración la ruta por defecto que se va a utilizar para la próxima ejecución del programa
     public void writeDefaultPath(String toWrite){
         try {
             BufferedWriter out = new BufferedWriter(new FileWriter(configFile,false));

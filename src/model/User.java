@@ -1,12 +1,8 @@
 package model;
 
-import java.util.Objects;
-
-
-
-/**
- *
+/*
  * @author Martin Ramonda
+ * Clase modelo User
  */
 public class User {
     

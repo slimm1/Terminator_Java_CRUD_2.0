@@ -3,8 +3,8 @@ package model;
 import java.util.ArrayList;
 
 /**
- *
  * @author Martin Ramonda
+ * Clase modelo UserList
  */
 public class UserList {
     

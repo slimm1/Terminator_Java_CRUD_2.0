@@ -8,6 +8,7 @@ import view.MainForm;
 
 /**
  * @author Martin Ramonda
+ * Clase controladora para el formulario principal. Instanciada con el patrón singleton para acceso global y unica instancia.
  */
 public class MainController {
     
@@ -17,26 +18,33 @@ public class MainController {
     
     public static MainController _instance = new MainController();
     
+    //Constructor privado, inicia una instancia SqliteLoader.
     private MainController(){
         loader = new SqliteLoader();
     }
     
+    // Devuelve la instancia del formulario para acceso externo
     public MainForm getForm(){
         return m;
     }
     
+    // Devuelve la instancia del loader
     public SqliteLoader getDbLoader(){
         return loader;
     }
     
+    // devuelve la instancia del modelo de la lista
     public UserList getListManager(){
         return listManager;
     }
     
+    // setea el modelo de la lista para un determinado momento
     public void setListManager(UserList u){
         this.listManager = u;
     }
     
+    // carga la vista con una lógica de botones según se haya logrado una conexión exitosa o no.
+    // si la conexión fue exitosa, se inicia la lista desde la base de datos y se cargan los datos en la tabla.
     public void loadView(){
         m = new MainForm();
         if(buttonLogic(loader.bdConnect())){
@@ -45,6 +53,7 @@ public class MainController {
         }
     }
     
+    // Setea los botones según la conexion fue true o false. 
     public boolean buttonLogic(boolean loaded){
         if(loaded){
             m.getCreateButton().setEnabled(false);
@@ -62,6 +71,7 @@ public class MainController {
         }
     }
     
+    // Carga los datos de los usuarios en lista en la tabla del formulario
     public void loadTable(){  
         DefaultTableModel model = (DefaultTableModel) m.getMainTable().getModel();
         model.setRowCount(0);
@@ -70,6 +80,7 @@ public class MainController {
         }
     }
     
+    //Devuelve el username que se encuentra en la posicion que el usuario ha seleccionado
     public String getNameValueInSelectedRow(){
         if(m.getMainTable().getSelectedRow()==-1){
             return null;

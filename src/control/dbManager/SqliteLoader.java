@@ -20,6 +20,8 @@ import model.UserList;
 
 /**
  * @author Martin Ramonda
+ * Clase enlace entre la base de datos y la aplicación. Incluye herramientas para lanzar consultas, recuperar, insertar y actualizar
+ * datos en la bd. 
  */
 public class SqliteLoader {
     
@@ -29,21 +31,24 @@ public class SqliteLoader {
     
     private Connection c;
     
+    // constructor instancia el fileManager e inicia la ruta de acceso a la base de datos
     public SqliteLoader(){
         fileManager = new FileManager();
         connectPath = Constants.jdbc+fileManager.readConfigPath();
     }
     
+    // setea el path para esta instancia del programa. se usa cuando la ruta del fichero config no existe o no es correcta.
     public void setPath(String path){
         this.connectPath=path;
     }
     
+    // true si se conectó o false si no se conectó.
+    // si el fichero no existe o está vacío lanza excepción sql, es decir devuelve false.
     public boolean bdConnect(){
         try{
             if(fileManager.readConfigPath()==null || !new File(fileManager.readConfigPath()).exists()){
                 throw new SQLException();
             }
-            System.out.println(new File(fileManager.readConfigPath()).exists());
             c = DriverManager.getConnection(connectPath);
             JOptionPane.showMessageDialog(null, "BD CONECTADA", "OK", JOptionPane.INFORMATION_MESSAGE);
             return true;
@@ -53,9 +58,16 @@ public class SqliteLoader {
             return false;
         }
     }
+    
+    // sobreescritura del método bdConnect para conectar la bd con una ruta diferente a la que proporciona esta clase. Realiza varias acciones:
+    // setea el String de conexion para esta instancia e inicia la conexión a la base de datos.
+    // Escribe la ruta de la base de datos en el fichero de configuración como ruta por defecto.
+    // Inicia la lista de usuarios desde una instancia del controlador con una lista vacía.
+    // Crea una nueva tabla en la base de datos si ésta no existe.
+    // (Este método sólo se ejecuta cuando la primera conexión falla, es decir cuando se está creando una nueva base de datos)
     public boolean bdConnect(String path){
         try{
-            this.setPath("jdbc:sqlite:"+path);
+            this.setPath(Constants.jdbc+path);
             c = DriverManager.getConnection(connectPath);
             fileManager.writeDefaultPath(path);
             MainController._instance.setListManager(new UserList(loadListFromDataBase()));
@@ -68,6 +80,8 @@ public class SqliteLoader {
             return false;
         }
     }
+    
+    // Ejecuta una query para crear una nueva tabla users en la base de datos.
     public void createTableStatement(Connection c) throws SQLException{
         Statement statement = c.createStatement();
         String createTable = "CREATE TABLE IF NOT EXISTS users ("
@@ -79,6 +93,8 @@ public class SqliteLoader {
         statement.execute(createTable);
     }
     
+    
+    // Carga un arrayList de users con los datos existentes en la base de datos. Cualquier error lanza excepción y devuelve null.
     public ArrayList<User> loadListFromDataBase(){
         String selectQuery = "SELECT * FROM users";
         ArrayList<User> userList = new ArrayList<>();
@@ -93,11 +109,11 @@ public class SqliteLoader {
             }
             return userList;
         } catch (SQLException ex) {
-            System.out.println("Error sql al iniciar la lista");
             return null;
         }
     }
     
+    // Inserta los datos pasados por parámetros en la base de datos como un nuevo usuario. El id es autoincrementable en la bd
     public boolean insertUserStatment(String username, String password, String email, String birthDate){
         String insert = "INSERT INTO users(username,password,email,birthDate) "
                     + "VALUES(\""+username+"\", \""+password+"\", \""+email+"\", \""+birthDate+"\");";
@@ -111,6 +127,7 @@ public class SqliteLoader {
         } 
     }
     
+    // Update statment para un determinado usuario (u). Los datos recogidos en parámetros son los datos a actualizar en la bd. 
     public void updateUserStatment(User u,String username, String password, String email, String birthDate){
         String update = "UPDATE users SET username = \""+username+"\", password = \""+password+"\","
                 + "email = \""+email+"\", birthDate = \""+birthDate+"\" WHERE userId = "+u.getId();
@@ -123,6 +140,7 @@ public class SqliteLoader {
         } 
     }
     
+    // Elimina de la base de datos el usuario que coincida con el usuario pasado por params
     public void removeUserStatment(User u){
         String delete = "DELETE FROM users WHERE userId = "+u.getId()+";";
         try {
@@ -130,7 +148,7 @@ public class SqliteLoader {
             Statement s = c.createStatement();
             s.execute(delete);
         } catch (SQLException ex) {
-            System.out.println("Error sql al actualizar");
+            System.out.println("Error sql al eliminar");
         } 
     }
 }

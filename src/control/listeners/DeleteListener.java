@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package control.listeners;
 
-import control.DataController;
 import control.MainController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,11 +7,12 @@ import javax.swing.JOptionPane;
 import model.User;
 
 /**
- *
- * @author Vespertino
+ * @author Martin Ramonda
+ * Clase listener para boton de borrar usuario en ventana principal (MainForm)
  */
 public class DeleteListener implements ActionListener{
 
+    // Accion de borrado en click, si hay objeto seleccionado borra, si no lanza mensaje.
     @Override
     public void actionPerformed(ActionEvent e) {
         if(MainController._instance.getNameValueInSelectedRow()==null){
@@ -27,6 +23,7 @@ public class DeleteListener implements ActionListener{
         }
     }
     
+    // recupera el usuario cargado en memoria a través del nombre. Elimina el usuario de la base datos y recarga la lista y la tabla.
     public void deleteUser(){
         User selectedUser = MainController._instance.getListManager().getUserByName(MainController._instance.getNameValueInSelectedRow());
         MainController._instance.getDbLoader().removeUserStatment(selectedUser);

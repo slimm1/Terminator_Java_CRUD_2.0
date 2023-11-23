@@ -2,6 +2,7 @@ package control.listeners;
 
 import control.DataController;
 import control.MainController;
+import control.constants.Constants;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -14,14 +15,14 @@ import model.User;
 import view.DataForm;
 
 /**
- *
  * @author Martin Ramonda
+ * Clase listener para el boton de aceptar en el formulario de datos (DataForm)
  */
 public class SubmitListener implements ActionListener{
     
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-    Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-
+    
+    // accede a la instancia de DataForm a través de la clase SwingUtilities. Carga los datos recogidos en los
+    // text fields y realiza una acción u otra según sea el formulario de añadir o editar usuario.
     @Override
     public void actionPerformed(ActionEvent e) {
         DataForm d = (DataForm)SwingUtilities.getWindowAncestor((JButton)e.getSource());
@@ -37,6 +38,14 @@ public class SubmitListener implements ActionListener{
         }
     }
     
+    /*
+    * Comprueba que todo sea correcto en los textfields cuando se presione el boton de aceptar y sea la opción de editar usuario.
+        - comprueba si hay cambios para guardar
+        - comprueba si hay espacios en blanco
+        - comprueba que el email coincide con el patron establecido en una regex
+        - comprueba que el nombre actualizado no coincida con el de otro usuario existente en la lista
+    Si pasa todas las comprobaciones: actualiza la base de datos, setea la lista con los nuevos datos, carga la tabla y cierra el formulario.
+    */
     public void submitEditUser(DataForm d,String username, String password,String email, String birth){
         User selectedUser = DataController._instance.getSelectedUser();
         boolean changes = equalFields(username, password, email, birth, selectedUser);
@@ -62,6 +71,7 @@ public class SubmitListener implements ActionListener{
         }
     }
     
+    // Método similar al de editar. 
     public void submitAddUser(DataForm d,String username, String password,String email, String birth){
         if(!emailChecker(email)){
            JOptionPane.showMessageDialog(null, "invalid e-mail format", "e-mail error", JOptionPane.ERROR_MESSAGE);
@@ -82,6 +92,7 @@ public class SubmitListener implements ActionListener{
         }
     }
     
+    // Checkea si alguno de los parametros contiene una cadena vacía.
     public boolean checkEmptyFields(String username, String password,String email, String birth){
         if(email.isEmpty()){
            return true;
@@ -98,11 +109,13 @@ public class SubmitListener implements ActionListener{
         return false;
     }
     
+    // comprueba el email a través de una regex.
     public boolean emailChecker(String email){
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
+        Matcher matcher = Constants.VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.matches();    
     }
     
+    // comprueba si alguno de los params coincide con los del usuario seleccionado.
     public boolean equalFields(String username, String password,String email, String birth, User selectedUser){
         boolean nameBool, emailBool, passwordBool, dateBool;
         nameBool = username.equalsIgnoreCase(selectedUser.getUsername());

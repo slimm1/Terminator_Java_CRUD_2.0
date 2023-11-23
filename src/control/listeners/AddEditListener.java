@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package control.listeners;
 
 import control.DataController;
@@ -13,11 +9,15 @@ import javax.swing.JOptionPane;
 import view.DataForm;
 
 /**
- *
  * @author Martin Ramonda
+ * Clase Listener para boton de añadir y editar.
  */
 public class AddEditListener implements ActionListener{
 
+    /*
+    * INSTANCIA LA VISTA DE DATOS SEGÚN SEA la de añadir o la editar.
+      desactiva la ventana principal mientras la de datos esté activa. 
+    */
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clickedButton = (JButton)e.getSource();

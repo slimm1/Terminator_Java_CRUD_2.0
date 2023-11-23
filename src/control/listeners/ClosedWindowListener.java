@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package control.listeners;
 
 import control.MainController;
@@ -9,8 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- *
- * @author Vespertino
+ * @author Martin Ramonda
+ * Clase para recoger el evento close del formulario de datos. 
  */
 public class ClosedWindowListener extends WindowAdapter{
 
