@@ -78,8 +78,6 @@ public class MainForm extends javax.swing.JFrame {
         TitleLabel.setFont(new java.awt.Font("Candara Light", 1, 24)); // NOI18N
         TitleLabel.setText("ULTIMATE USER MANAGMENT C.R.U.D");
 
-        ImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/image/logo.png"))); // NOI18N
-
         CreateButton.setText("CREATE DATABASE");
 
         DeleteButton.setText("DELETE USER");
